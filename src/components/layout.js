@@ -1,18 +1,13 @@
-/**
- * Layout component that queries for data
- * with Gatsby's useStaticQuery component
- *
- * See: https://www.gatsbyjs.com/docs/use-static-query/
- */
-
 import * as React from "react"
+import { connect } from "react-redux"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
+import { useTheme, useMediaQuery, Toolbar, Box } from "@material-ui/core"
+import Header from "./Header"
+import MobMenu from "./MobMenu"
+import { setIsMobile } from "../state/actions"
 
-import Header from "./header"
-import "./layout.css"
-
-const Layout = ({ children }) => {
+const Layout = ({ dispatch, children }) => {
   const data = useStaticQuery(graphql`
     query SiteTitleQuery {
       site {
@@ -23,27 +18,20 @@ const Layout = ({ children }) => {
     }
   `)
 
+  const theme = useTheme()
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"))
+
+  React.useEffect(() => {
+    dispatch(setIsMobile(isMobile))
+  }, [isMobile])
   return (
     <>
-      <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-      <div
-        style={{
-          margin: `0 auto`,
-          maxWidth: 960,
-          padding: `0 1.0875rem 1.45rem`,
-        }}
-      >
-        <main>{children}</main>
-        <footer
-          style={{
-            marginTop: `2rem`,
-          }}
-        >
-          © {new Date().getFullYear()}, Built with
-          {` `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
-        </footer>
-      </div>
+      <Header />
+      <MobMenu />
+      <main>
+        <Toolbar />
+        <Box py={2}>{children}</Box>
+      </main>
     </>
   )
 }
@@ -52,4 +40,4 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired,
 }
 
-export default Layout
+export default connect()(Layout)

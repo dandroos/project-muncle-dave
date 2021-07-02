@@ -3,13 +3,13 @@ import { Container, Typography } from "@material-ui/core"
 
 import Seo from "../components/seo"
 
-const IndexPage = () => (
+const AboutPage = () => (
   <>
-    <Seo title="Home" />
+    <Seo title="About" />
     <Container>
-      <Typography>I am the home page</Typography>
+      <Typography>I am the about page</Typography>
     </Container>
   </>
 )
 
-export default IndexPage
+export default AboutPage

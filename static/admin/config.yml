@@ -1,0 +1,31 @@
+backend:
+  name: git-gateway
+media_folder: static/img
+public_folder: /img
+site_url: https://muncle-dave.netlify.app
+collections:
+  - name: blog
+    label: Blogs
+    label_singular: Blog
+    folder: content/blog
+    create: true
+    editor:
+      preview: false
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    path: '{{slug}}/index'
+    media_folder: ''
+    public_folder: ''
+    summary: "TITLE: {{title}}, POSTED: {{day}}/{{month}}/{{year}}"
+    fields:
+      - label: Title
+        name: title
+        widget: string
+      - label: Featured Image
+        name: featured_image
+        widget: image
+      - label: Date
+        name: date
+        widget: datetime
+      - label: Body
+        name: body
+        widget: markdown
